@@ -1,70 +1,352 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Guard Dashboard - ALETTERRO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guard Dashboard</title>
+
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family: Arial, sans-serif;}
-        body{background: linear-gradient(to right,#e6d9ff,#f3ecff);padding:20px;}
-        h1{text-align:center;color:#5a2ea6;margin-bottom:20px;}
-        .guard-container{display:grid;grid-template-columns: repeat(2, 1fr);gap:20px;margin-bottom:30px;}
-        .guard-card{background:white;padding:20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-        .guard-card h3{color:#5a2ea6;margin-bottom:10px;}
-        .guard-card p{font-size:14px;margin:4px 0;}
-        table{width:100%;background:white;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-        th, td{padding:10px;text-align:center;border-bottom:1px solid #ddd;font-size:14px;}
-        th{background:#7b4ce0;color:white;}
-        .btn{padding:5px 10px;border:none;border-radius:5px;color:white;cursor:pointer;font-size:12px;}
-        .checkin{background:#28a745;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e6d9ff, #f3ecff);
+            padding: 25px;
+            color: #333;
+        }
 
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
 
+        h1 {
+            color: #5a2ea6;
+            margin-bottom: 20px;
+        }
 
+        .profile {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
 
-        
-        .reject{background:#dc3545;}
-        .btn:hover{opacity:0.8;}
-        .back-btn{background:#7b4ce0;color:white;padding:10px 15px;border-radius:8px;text-decoration:none;display:inline-block;margin-bottom:15px;font-weight:bold;}
-        .back-btn:hover{opacity:0.8;}
+        .profile h2 {
+            color: #6f42c1;
+            margin-bottom: 12px;
+        }
+
+        .profile p {
+            margin: 7px 0;
+        }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            min-width: 1250px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #6f42c1;
+            color: white;
+            padding: 13px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8f4ff;
+        }
+
+        .visitor-photo {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 3px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .checkin {
+            background: #28a745;
+        }
+
+        .checkout {
+            background: #007bff;
+        }
+
+        .reject {
+            background: #dc3545;
+        }
+
+        .completed {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #d68910;
+            font-weight: bold;
+        }
+
+        .not-exited {
+            color: #888;
+        }
+
+        .logout {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            margin-top: 20px;
+        }
+
+        .empty {
+            padding: 25px;
+            color: #777;
+        }
     </style>
 </head>
+
 <body>
 
-<!-- Back Button -->
-<a href="{{ url_for('home') }}" class="back-btn">Back</a>
+<div class="container">
 
-<h1>Guard Dashboard</h1>
+    <h1>🛡️ Guard Dashboard</h1>
 
-<div class="guard-container">
-    <div class="guard-card"><h3>Guard 1</h3><p>ID: G101</p><p>Gate No: 1</p><p>Time: 9:00 AM - 5:00 PM</p><p>Phone: 9876543210</p></div>
-    <div class="guard-card"><h3>Guard 2</h3><p>ID: G102</p><p>Gate No: 2</p><p>Time: 9:00 AM - 5:00 PM</p><p>Phone: 9876543211</p></div>
-    <div class="guard-card"><h3>Guard 3</h3><p>ID: G103</p><p>Gate No: 3</p><p>Time: 10:00 AM - 6:00 PM</p><p>Phone: 9876543212</p></div>
-    <div class="guard-card"><h3>Guard 4</h3><p>ID: G104</p><p>Gate No: 4</p><p>Time: 10:00 AM - 6:00 PM</p><p>Phone: 9876543213</p></div>
+    <!-- GUARD PROFILE -->
+
+    <div class="profile">
+
+        <h2>Guard Profile</h2>
+
+        <p><strong>Name:</strong> {{ guard["name"] }}</p>
+
+        <p><strong>Guard ID:</strong> {{ guard["guard_id"] }}</p>
+
+        <p><strong>Mobile:</strong> {{ guard["mobile"] }}</p>
+
+        <p><strong>Address:</strong> {{ guard["address"] }}</p>
+
+    </div>
+
+
+    <!-- VISITOR DETAILS -->
+
+    <div class="table-container">
+
+        <h2 style="color:#5a2ea6; margin-bottom:20px;">
+            Today's Visitor Records
+        </h2>
+
+        {% if visitors %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Purpose</th>
+                    <th>Visit Date</th>
+                    <th>Visit Time</th>
+                    <th>Entry Time</th>
+                    <th>Check In Status</th>
+                    <th>Exit Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for v in visitors %}
+
+                <tr>
+
+                    <!-- PHOTO -->
+
+                    <td>
+                        {% if v["photo_data"] %}
+                            <img
+                                src="{{ v['photo_data'] }}"
+                                class="visitor-photo"
+                                alt="Visitor Photo"
+                            >
+                        {% else %}
+                            No Photo
+                        {% endif %}
+                    </td>
+
+                    <!-- VISITOR DETAILS -->
+
+                    <td>{{ v["name"] }}</td>
+
+                    <td>{{ v["phone"] }}</td>
+
+                    <td>{{ v["purpose"] }}</td>
+
+                    <td>{{ v["visit_date"] }}</td>
+
+                    <td>{{ v["visit_time"] }}</td>
+
+                    <!-- ENTRY TIME -->
+
+                    <td>
+                        {{ v["created_at"] or "Not Available" }}
+                    </td>
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        {% if v["status"] == "Pending" %}
+
+                            <span class="pending">Pending</span>
+
+                        {% elif v["status"] == "Checked In" %}
+
+                            <span class="completed">Checked In</span>
+
+                        {% elif v["status"] == "Checked Out" %}
+
+                            <span class="completed">Checked Out</span>
+
+                        {% elif v["status"] == "Rejected" %}
+
+                            <span class="rejected">Rejected</span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- EXIT TIME -->
+
+                    <td>
+
+                        {% if v["checkout_time"] %}
+
+                            {{ v["checkout_time"] }}
+
+                        {% else %}
+
+                            <span class="not-exited">Not Exited</span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- ACTION BUTTONS -->
+
+                    <td>
+
+                        {% if v["status"] == "Pending" %}
+
+                            <a
+                                href="{{ url_for('checkin', visitor_id=v['id']) }}"
+                                class="btn checkin"
+                            >
+                                Check In
+                            </a>
+
+                            <a
+                                href="{{ url_for('reject', visitor_id=v['id']) }}"
+                                class="btn reject"
+                            >
+                                Reject
+                            </a>
+
+                        {% elif v["status"] == "Checked In" %}
+
+                            <a
+                                href="{{ url_for('checkout', visitor_id=v['id']) }}"
+                                class="btn checkout"
+                            >
+                                Check Out
+                            </a>
+
+                        {% elif v["status"] == "Checked Out" %}
+
+                            <span class="completed">
+                                Visit Completed
+                            </span>
+
+                        {% elif v["status"] == "Rejected" %}
+
+                            <span class="rejected">
+                                Rejected
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <div class="empty">
+                No visitors registered for today.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <a href="{{ url_for('guard_login') }}"
+       class="logout">
+        Back to Login
+    </a>
+
 </div>
-
-<h2 style="margin-bottom:10px; color:#5a2ea6;">Today's Visitor List</h2>
-
-<table>
-    <tr>
-        <th>Visitor Name</th>
-        <th>Phone</th>
-        <th>Purpose</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-
-    {% for v in visitors %}
-    <tr>
-        <td>{{ v["Name"] }}</td>
-        <td>{{ v["Phone"] }}</td>
-        <td>{{ v["Purpose"] }}</td>
-        <td>{{ v["Status"] }}</td>
-        <td>
-            <a href="/checkin/{{ v['Phone']}}"><button class="btn checkin">Check In</button></a>
-            <a href="/reject/{{ v['Phone'] }}"><button class="btn reject">Reject</button></a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
 
 </body>
 </html>

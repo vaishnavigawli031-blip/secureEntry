@@ -86,6 +86,9 @@ border-radius:6px;
 margin-top:20px;
 transition:0.3s;
 font-weight:bold;
+border: none;
+width: 100%;
+cursor: pointer;
 }
 
 .btn:hover{
@@ -115,20 +118,25 @@ text-decoration:underline;
 <body>
 
 <div class="login-box">
-<h2>Guard Login</h2>
+    <h2>Guard Login</h2>
 
-<div class="input-box">
-<label>Guard ID</label>
-<input type="text" placeholder="Enter Guard ID">
-</div>
+    <form method="POST" action="{{ url_for('guard_login') }}">
 
-<div class="input-box">
-<label>Password</label>
-<input type="password" placeholder="Enter Password">
-</div>
+        <div class="input-box">
+            <label>Guard ID</label>
+            <input type="text" name="guard_id"
+                   placeholder="Enter Guard ID" required>
+        </div>
 
-<a href="{{ url_for('guard_dashboard') }}" class="btn">Login</a>
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" name="password"
+                   placeholder="Enter Password" required>
+        </div>
 
+        <button type="submit" class="btn">Login</button>
+
+    </form>
 </div>
 
 </body>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guard Login - ALETTERRO</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: linear-gradient(135deg,#dcd0ff,#f5f0ff);
+}
+
+/* login box */
+.login-box{
+background:white;
+padding:35px;
+width:340px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+text-align:center;
+animation:fadeIn 0.6s ease;
+}
+
+/* smooth entry */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+h2{
+color:#4b2ca3;
+margin-bottom:20px;
+}
+
+/* input style */
+.input-box{
+margin:15px 0;
+text-align:left;
+}
+
+.input-box label{
+font-size:13px;
+color:#555;
+}
+
+.input-box input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+outline:none;
+transition:0.2s;
+}
+
+/* focus effect */
+.input-box input:focus{
+border-color:#7b4ce0;
+box-shadow:0 0 5px rgba(123,76,224,0.3);
+}
+
+/* button */
+.btn{
+display:block;
+text-decoration:none;
+background:#7b4ce0;
+color:white;
+padding:10px;
+border-radius:6px;
+margin-top:20px;
+transition:0.3s;
+font-weight:bold;
+}
+
+.btn:hover{
+background:#5a2ea6;
+transform:translateY(-2px);
+box-shadow:0 5px 12px rgba(0,0,0,0.2);
+}
+
+/* extra links */
+.extra{
+margin-top:15px;
+font-size:13px;
+}
+
+.extra a{
+color:#5a2ea6;
+text-decoration:none;
+}
+
+.extra a:hover{
+text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+<h2>Guard Login</h2>
+
+<div class="input-box">
+<label>Guard ID</label>
+<input type="text" placeholder="Enter Guard ID">
+</div>
+
+<div class="input-box">
+<label>Password</label>
+<input type="password" placeholder="Enter Password">
+</div>
+
+<a href="{{ url_for('guard_dashboard') }}" class="btn">Login</a>
+
+</div>
+
+</body>
+</html>
